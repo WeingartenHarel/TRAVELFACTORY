@@ -1,0 +1,45 @@
+body{
+    background-color: rgb(238, 238, 238);
+}
+.div {
+  opacity: 0.1;
+}
+.person{
+    display: flex;
+    gap: 30px;
+    color: #666;
+    background: #fff;
+    padding: 20px;
+    min-width: 420px;
+}
+.person-img{
+    display: flex;
+    width: 120px;
+    flex-direction: column;
+
+}
+.person-img img{
+    border-radius: 80px;
+}
+.person-img span{
+    width: 160px;
+}
+.person-info{
+ display:flex;
+ flex-direction: column;
+}
+.name{
+    margin-bottom:  6px;
+}
+.address{
+    margin-bottom: 10px;
+}
+.padding10{
+    padding: 10px;
+}
+.bold{
+    font-weight: 900;
+}
+.normal{
+    font-weight: 400;
+}
