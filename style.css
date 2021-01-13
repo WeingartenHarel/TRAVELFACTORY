@@ -43,3 +43,20 @@ body{
 .normal{
     font-weight: 400;
 }
+#map{
+    width: 80%;
+    height: 800px;
+    margin: 0 auto;
+    margin-top: 70px;
+    border: 1px solid #000;
+}
+
+.btn-article{
+    background-color: aliceblue;
+    width: 100%;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid #000;
+    margin-top: 10px;
+}

@@ -3,80 +3,80 @@ const gPosts = [
 {
     id:"a001",
     name:'Jhon smith',
-    address:'Rivira state 32/106',
+    address:'Canada',
     company:'Twitter inc',
     addressb:'795 folsom st',
-    cpuntry:'San Fransisco',
+    country:'Canada',
     cel:'p(123) 12312-345435',
     img:'img/img/alexjonathan.jpg'
 },
 {
  id:"a002",
     name:'Jhon smith',
-    address:'Rivira state 32/106',
+    address:'Ney york',
     company:'Twitter inc',
     addressb:'795 folsom st',
-    cpuntry:'San Fransisco',
+    country:'Ney york',
     cel:'p(123) 12312-345435',
     img:'img/img/alexjonathan.jpg'
 },
 {
  id:"a003",
     name:'Jhon smith',
-    address:'Rivira state 32/106',
+    address:'San Fransisco',
     company:'Twitter inc',
     addressb:'795 folsom st',
-    cpuntry:'San Fransisco',
+    country:'San Fransisco',
     cel:'p(123) 12312-345435',
     img:'img/img/alexjonathan.jpg'
 },
 {
  id:"a004",
     name:'Jhon smith',
-    address:'Rivira state 32/106',
+    address:'Tel aviv',
     company:'Twitter inc',
     addressb:'795 folsom st',
-    cpuntry:'San Fransisco',
+    country:'Tel aviv',
     cel:'p(123) 12312-345435',
     img:'img/img/alexjonathan.jpg'
 },
 {
  id:"a005",
     name:'Jhon smith',
-    address:'Rivira state 32/106',
+    address:'Ramat gan',
     company:'Twitter inc',
     addressb:'795 folsom st',
-    cpuntry:'San Fransisco',
+    country:'Ramat gan',
     cel:'p(123) 12312-345435',
     img:'img/img/alexjonathan.jpg'
 },
 {
  id:"a006",
     name:'Jhon smith',
-    address:'Rivira state 32/106',
+    address:'San Fransisco',
     company:'Twitter inc',
     addressb:'795 folsom st',
-    cpuntry:'San Fransisco',
+    country:'San Fransisco',
     cel:'p(123) 12312-345435',
     img:'img/img/alexjonathan.jpg'
 },
 {
  id:"a007",
     name:'Jhon smith',
-    address:'Rivira state 32/106',
+    address:'California',
     company:'Twitter inc',
     addressb:'795 folsom st',
-    cpuntry:'San Fransisco',
+    country:'California',
     cel:'p(123) 12312-345435',
     img:'img/img/alexjonathan.jpg'
 },
 {
  id:"a008",
     name:'Jhon smith',
-    address:'Rivira state 32/106',
+    address:'San Fransisc',
     company:'Twitter inc',
     addressb:'795 folsom st',
-    cpuntry:'San Fransisco',
+    country:'San Fransisco',
     cel:'p(123) 12312-345435',
     img:'img/img/alexjonathan.jpg'
 },
@@ -94,7 +94,7 @@ function renderAllPosts() {
      // console.log('currentPost',currentPost.id)
  //     id:"a008",
  //    name:'Jhon smith',
- //    address:'Rivira state 32/106',
+ //    address:'Rivira state',
  //    company:'Twitter inc',
  //    addressb:'795 folsom st',
  //    country:'San Fransisco',
@@ -110,7 +110,7 @@ function renderAllPosts() {
                      <div class="person-info">
 
                          <span class="name bold">${currentPost.name} </span>
-                         <span class="address normal"><i class="fas fa-map-marker-alt"></i> ${currentPost.address}</span>
+                         <a class="address normal" onclick="mapSetLOcation(' ${currentPost.address}')"><i class="fas fa-map-marker-alt"></i> ${currentPost.address}</a>
                          <span class="bold">${currentPost.company}</span>
                          <span class="normal">${currentPost.addressb}</span>
                          <span class="normal">${currentPost.country}</span>
@@ -183,7 +183,7 @@ function updatePosts(postId,titlea,titleb,titlec,titled,titlee){
  console.log('fname', postId,titlea,titleb,titlec,titled,titlee)
 
   // name:'Jhon smith',
- //    address:'Rivira state 32/106',
+ //    address:'Rivira state',
  //    company:'Twitter inc',
  //    addressb:'795 folsom st',
  //    country:'San Fransisco',
@@ -216,3 +216,64 @@ function getPostIdx(postId) {
 function getPostById(postId) {
  return gPosts.find(post => postId === post.id);
 }
+
+var gMap;
+
+function initMap(lat = 32.0749831, lng = 34.9120554) {
+    console.log('InitMap');
+    return _connectGoogleApi()
+        .then((res) => {
+            console.log('google available', res);
+            gMap = new google.maps.Map(
+                document.querySelector('#map'), {
+                center: { lat, lng },
+                zoom: 15
+            })
+            console.log('Map!', gMap);
+        })
+}
+
+
+function _connectGoogleApi(location='paris') {
+    if (window.google) return Promise.resolve()
+    //const API_KEY = 'AIzaSyCy6hOuYH-4WoOK2wfJ14CVE1U8HW6Dp70'; //TODO: Enter your API Key
+    const API_KEY = 'AIzaSyCy6hOuYH-4WoOK2wfJ14CVE1U8HW6Dp70'; //TODO: Enter your API Key
+    var elGoogleApi = document.createElement('script');
+    elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
+    // elGoogleApi.src = `https://maps.googleapis.com/maps/api/geocode/json?address=${location}&key=${API_KEY}`;
+    elGoogleApi.async = true;
+    document.body.append(elGoogleApi);
+
+    return new Promise((resolve, reject) => {
+        elGoogleApi.onload = resolve;
+        elGoogleApi.onerror = () => reject('Google script failed to load')
+    })
+}
+
+async function mapSetLOcation(location){
+    console.log('location',location)
+    var xmlHttp = new XMLHttpRequest();
+    const loc = await xmlHttp.open("get", 'https://maps.googleapis.com/maps/api/geocode/json?address=paris&key=AIzaSyCy6hOuYH-4WoOK2wfJ14CVE1U8HW6Dp70', true);
+    console.log('loc',loc)
+    codeAddress(location)
+
+}
+
+function codeAddress(location) {
+    geocoder = new google.maps.Geocoder();
+    var address = location
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == 'OK') {
+        gMap.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            map: gMap,
+            position: results[0].geometry.location
+        });
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+}
+
+// init
+initMap();
